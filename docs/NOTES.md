@@ -46,10 +46,17 @@ and finds none of its targets. Adding `afterglow` to its list without fixing
 that path would do nothing, silently. Same defect as
 `scripts/sync-attributions.py` — see the fleet note on the repo tree layout.
 
-Also outstanding, and for the same reason: the GitHub repository itself has not
-been created, so nothing has been pushed. `docs/hero.jpg`, the user guide PDF,
-the project video and the `afterglow-demo.stoatworks-labs.com` Worker route all
-follow from that.
+Still outstanding: `docs/hero.jpg` (the README uses two harness renders of the
+test card instead, labelled as such), the user guide PDF, the project video,
+the Instagram cover, and the `afterglow-demo.stoatworks-labs.com` Worker route
+and its Cloudflare deploy.
+
+The repository itself was created public and pushed on 2026-08-24. The `ci`
+workflow went green on the first push, and `release` was dispatched by hand
+once (run 32701381985) to exercise the Windows path without cutting anything:
+macOS universal bundle, Windows x64 DLL, both OpenFX bundles and the NSIS
+installer all built, and the publish job correctly skipped for want of a tag.
+Nothing is tagged, so there is no v0.1.0 yet.
 
 ---
 

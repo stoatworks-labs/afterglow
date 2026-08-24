@@ -166,6 +166,7 @@ Verified by measurement on an M4 Max, macOS 26.4:
 | Factory presets | all 8, against all 3 host behaviours, in both builds |
 | Browser demo | its GLSL is this repo's, character for character; its ported maths agrees to 1.8e-7 |
 | macOS binary | universal (`x86_64 arm64`), exports `plugMain` |
+| Windows x64 | builds green in CI, plus the OpenFX bundle and the NSIS installer |
 | OpenFX bundle | loads and renders through `ofxprobe`, exports `_OfxGetPlugin`, ad-hoc signs |
 | Render cost | 0.66 ms/frame at 1080p, 2.6 ms at 4K with the defaults; 1.5 ms and 5.9 ms with 32 frames at Full |
 

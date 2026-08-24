@@ -395,6 +395,11 @@ WebGL. Keep it that way, or the checker cannot import it.
   `_OfxGetPlugin`, names its own binary in its plist and ad-hoc signs.
 - **Render cost**: 0.66 ms/frame at 1080p and 2.6 ms at 4K with the defaults;
   1.5 ms and 5.9 ms with 32 frames at Full resolution and halation on.
+- **Both platforms build in CI.** The `ci` workflow is green on macos-14 with
+  the no-GPU checks running in it, and the `release` workflow has been
+  dispatched once by hand (run 32701381985): the macOS universal bundle, the
+  Windows x64 DLL, both OpenFX bundles and the NSIS installer all built, and
+  the publish job correctly did not run because there is no tag.
 
 ### Assumed, not measured
 
@@ -407,8 +412,10 @@ WebGL. Keep it that way, or the checker cannot import it.
   faithful harness but it is not Resolve, and in particular it is not a host
   that renders frames out of order across several threads — which is the
   condition the OpenFX build's whole design assumes.
-- **Windows has never been built.** The release workflow does it; nothing has
-  run it yet.
+- **Nothing built for Windows has ever been RUN.** The DLL compiles and the
+  installer wraps, which is a real result and is not the same as Resolume
+  loading it. The GLEW-from-vcpkg path in particular is only known to
+  configure and link.
 - **Linux has no path at all.** The CMakeLists branches on APPLE and WIN32.
 - **The browser demo has never been watched running.** Its shaders and its
   maths are proved to be this repo's, and the page loads without a console
