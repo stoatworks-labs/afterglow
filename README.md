@@ -28,6 +28,49 @@ in front of it — until it reaches the end and drops off.
 the colour bars, the ramp and the checkerboard are not moving, so they come out
 of the effect exactly as they went in.*
 
+<!-- downloads:start -->
+
+## Download
+
+**[v0.1.1](https://github.com/stoatworks-labs/afterglow/releases/tag/v0.1.1)** — prebuilt for macOS, Windows and Linux. Pick your platform:
+
+<details>
+<summary><b>macOS</b> — Universal (Apple Silicon + Intel)</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| Universal (Apple Silicon + Intel) · .dmg disk image | [`afterglow-0.1.1-macos-universal.dmg`](https://github.com/stoatworks-labs/afterglow/releases/download/v0.1.1/afterglow-0.1.1-macos-universal.dmg) | 237 KB |
+| Universal (Apple Silicon + Intel) · .zip archive | [`afterglow-macos-universal.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-macos-universal.zip) | 200 KB |
+| Universal (Apple Silicon + Intel) · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`afterglow-ofx-macos-universal.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-ofx-macos-universal.zip) | 264 KB |
+
+</details>
+
+<details>
+<summary><b>Windows</b> — x64</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| x64 · .exe installer | [`afterglow-0.1.1-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/afterglow/releases/download/v0.1.1/afterglow-0.1.1-windows-x86_64-setup.exe) | 226 KB |
+| x64 · .zip archive | [`afterglow-windows-x86_64.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-windows-x86_64.zip) | 121 KB |
+| x64 · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`afterglow-ofx-windows-x86_64.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-ofx-windows-x86_64.zip) | 75 KB |
+
+</details>
+
+<details>
+<summary><b>Linux</b> — x64</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| x64 · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`afterglow-ofx-linux-x86_64.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-ofx-linux-x86_64.zip) | 725 KB |
+
+</details>
+
+All builds, checksums and release notes: [github.com/stoatworks-labs/afterglow/releases](https://github.com/stoatworks-labs/afterglow/releases).
+
+macOS builds are signed and notarised and open normally. The Windows builds are unsigned, so SmartScreen warns once.
+
+<!-- downloads:end -->
+
 ## What it does
 
 **The trail.** Frames sets how many pictures are in the queue, from 4 to 32.
