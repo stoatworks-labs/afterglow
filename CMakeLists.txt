@@ -193,6 +193,15 @@ if(BUILD_OFX)
     # comment inside the file, and tools/verify.sh, which checks it locally.
     set(OFX_BUNDLE_IDENTIFIER "com.stoatworks.ofx.afterglow")
 
+    # Threads, explicitly. The OFX Support library's multi-thread suite calls
+    # pthread_create, and on Rocky 8 -- glibc 2.28, the floor Resolve supports
+    # -- that still lives in libpthread; libpthread was only folded into libc in
+    # glibc 2.34. Leave it out and the plugin compiles, links, passes a symbol
+    # check and a glibc-version check, and then fails at dlopen with "undefined
+    # symbol: pthread_create". macOS and Windows never show it.
+    find_package(Threads REQUIRED)
+    target_link_libraries(AfterglowOFX PRIVATE Threads::Threads)
+
     set(OFX_BUNDLE_DIR "${CMAKE_BINARY_DIR}/Afterglow.ofx.bundle")
     set_target_properties(AfterglowOFX PROPERTIES
         PREFIX ""
