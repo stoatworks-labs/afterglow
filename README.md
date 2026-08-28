@@ -211,14 +211,20 @@ Verified by measurement on an M4 Max, macOS 26.4:
 | macOS binary | universal (`x86_64 arm64`), exports `plugMain` |
 | Windows x64 | builds green in CI, plus the OpenFX bundle and the NSIS installer |
 | OpenFX bundle | loads and renders through `ofxprobe`, exports `_OfxGetPlugin`, ad-hoc signs |
+| Linux x64 | the OpenFX bundle builds in AlmaLinux 8 and `dlopen`s on Rocky 8, the distro Resolve supports |
 | Render cost | 0.66 ms/frame at 1080p, 2.6 ms at 4K with the defaults; 1.5 ms and 5.9 ms with 32 frames at Full |
 
 Run it yourself with `tools/verify.sh`.
 
-**Not yet done:** never loaded into Resolume, never loaded into Resolve, never
-built on Linux, and the browser demo has never been watched running — only
-proved to be running this repo's shaders and maths. See [AGENTS.md](AGENTS.md)
-for the full list of what is assumed rather than measured, and for the traps.
+**Not yet done:** never loaded into Resolume, never loaded into Resolve, and the
+browser demo has never been watched running — only proved to be running this
+repo's shaders and maths. The Linux OpenFX bundle *is* built: it comes out of an
+`almalinux:8` container for the glibc 2.28 floor Resolve's supported Rocky 8
+needs, a second job `dlopen`s the shipped `.ofx` in `rockylinux:8` and calls the
+entry points a host calls first, and the zip is in the download block above. That
+is a build and a load, not a render, and no OFX host on any platform has opened
+it. See [AGENTS.md](AGENTS.md) for the full list of what is assumed rather than
+measured, and for the traps.
 
 <!-- attributions:start -->
 This project is built on other people's work — see [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
