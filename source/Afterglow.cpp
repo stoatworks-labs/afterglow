@@ -29,7 +29,7 @@ static CFFGLPluginInfo PluginInfo(
 	0,                                                              // Plugin major version number
 	1,                                                              // Plugin minor version number
 	FF_EFFECT,                                                      // Plugin type
-	"Trails of recent frames, each one decaying further as it ages",// Plugin description
+	"Keeps the last few dozen frames and lays them back over the picture, each one further gone than the one in front of it.\n\nNot a blur and not a feedback loop. A queue: every frame goes in, the whole queue comes back out, and each frame in it is dimmer, coarser, more crushed, further drifted and further round the colour wheel than its neighbour, until it drops off the end.\n\nFold the frames into one accumulator instead and the damage compounds - yesterday's crush gets crushed again today - and there is no way back to the picture.\n\nFootage that is not moving comes out exactly as it went in.\n\nStart from a Preset, at the bottom.",// Plugin description
 	"Afterglow FFGL effect"                                         // About
 );
 
