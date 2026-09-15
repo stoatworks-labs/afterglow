@@ -5,6 +5,8 @@ FFGL plugin, and for DaVinci Resolve, Vegas, Nuke and Natron as an OpenFX plugin
 few dozen frames and lays them back over the picture, each one further gone than the one in front
 of it.
 
+![A trail of discrete ghosts behind a moving disc, over a static card that is untouched](trail.png)
+
 The idea it is built on is one number. **Everything about a ghost is decided by how old it is** —
 how much it is worth, where it has drifted to, how many bits of colour it has left, how far round
 the wheel its hue has gone. That is why the trail can be made to *fall apart* as it goes rather
