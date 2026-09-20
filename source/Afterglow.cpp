@@ -23,7 +23,7 @@ using namespace afterglow;
 static CFFGLPluginInfo PluginInfo(
 	PluginFactory< Afterglow >,                                     // Create method
 	"AG01",                                                         // Plugin unique ID of maximum length 4.
-	"Afterglow",                                                    // Plugin name
+	"SW Afterglow",                                                 // Plugin name
 	2,                                                              // API major version number
 	1,                                                              // API minor version number
 	0,                                                              // Plugin major version number
