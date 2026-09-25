@@ -28,6 +28,10 @@ in front of it — until it reaches the end and drops off.
 the colour bars, the ramp and the checkerboard are not moving, so they come out
 of the effect exactly as they went in.*
 
+[![Afterglow — frame trails that decay as they age, for Resolume](docs/video-thumb.png)](https://www.youtube.com/watch?v=SNWJKGV-dAU)
+
+*[Watch it](https://www.youtube.com/watch?v=SNWJKGV-dAU) — 55 seconds: four, twelve and thirty-two frames of discrete ghosts, Hold spreading a dozen across two seconds and Decay shaping the fall-off, the four blend modes, Pixelate coarsening each ghost with its age, Warp boiling and then swelling, Drift, Zoom and Spin carrying the trail away, Hue Shift, Bleach and Halation, and Background and Mix back to the clip. Crush has no beat: on real footage it barely moves a pixel (see the user guide). Rendered by the plugin's own harness over Resolume's bundled demo clips, not captured from Resolume.*
+
 <!-- downloads:start -->
 
 ## Download
@@ -84,7 +88,9 @@ brightest of them.
 describes what has happened to a frame by the time it reaches the *end* of the
 queue, and each frame gets that much of it in proportion to its own age:
 
-- **Crush** — the bit depth collapsing, 8 bits down to 1.
+- **Crush** — the bit depth collapsing, 8 bits down to 1 by the end of the
+  queue. The quietest control here: the most-crushed ghosts are also the
+  faintest, so on real footage it is a texture, not a look.
 - **Pixelate** — the grid coarsening, down to six cells across the frame.
 - **Warp** — a boiling noise field pulling the picture apart, with its own
   scale and speed.
