@@ -54,6 +54,7 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <csignal>
 #include <cstdio>
 #include <cstring>
 #include <fstream>
@@ -1640,7 +1641,12 @@ int main( int argc, char** argv )
 			}
 		}
 
+		//A closed stdout must be a failed write we can see, not a SIGPIPE
+		//that kills the process with 141 before it can say so.
+		std::signal( SIGPIPE, SIG_IGN );
+
 		std::vector< unsigned char > frame( static_cast< size_t >( width ) * height * 4 );
+		int status = 0;
 
 		for( int index = 0;; ++index )
 		{
@@ -1652,8 +1658,13 @@ int main( int argc, char** argv )
 					break;
 				filled += static_cast< size_t >( got );
 			}
+			//A partial frame is the end of the stream, never a frame.
 			if( filled < frame.size() )
+			{
+				if( filled > 0 )
+					std::fprintf( stderr, "partial frame at the end (%zu of %zu bytes, %dx%d): dropped\n", filled, frame.size(), width, height );
 				break;
+			}
 
 			for( const auto& track : automation )
 				plugin.SetFloatParameter( track.first, valueAt( track.second, index ) );
@@ -1676,7 +1687,11 @@ int main( int argc, char** argv )
 			glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
 			glClear( GL_COLOR_BUFFER_BIT );
 			if( plugin.ProcessOpenGL( &process ) != FF_SUCCESS )
+			{
+				std::fprintf( stderr, "render failed at frame %d\n", index );
+				status = 1;
 				break;
+			}
 
 			const std::vector< unsigned char > out = flipRows( readBackRaw( outputFBO, width, height ), width, height );
 			size_t written                         = 0;
@@ -1687,12 +1702,20 @@ int main( int argc, char** argv )
 					break;
 				written += static_cast< size_t >( put );
 			}
+			//The reader has gone: rendering on into a closed pipe is work
+			//nobody will see, and a short frame is worse than none.
+			if( written < out.size() )
+			{
+				std::fprintf( stderr, "stdout closed at frame %d\n", index );
+				status = 1;
+				break;
+			}
 		}
 
 		plugin.DeInitGL();
 		CGLSetCurrentContext( nullptr );
 		CGLDestroyContext( context );
-		return 0;
+		return status;
 	}
 
 	//A still, at the end of a run of frames. Several frames and not one, and

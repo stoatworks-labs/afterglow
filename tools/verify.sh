@@ -210,6 +210,33 @@ else
 fi
 
 echo
+echo "== pipe: the fleet's --pipe contract"
+# Whole frames only, a clean exit at the end of the stream, and a closed
+# stdout reported as exit 1 rather than the 141 of an unhandled SIGPIPE --
+# that 141 travelled through every harness that copied this loop.
+pipe_frame=$(( 64 * 36 * 4 ))
+pipe_raw=$( mktemp ); pipe_many=$( mktemp )
+head -c $(( pipe_frame * 5 / 2 )) /dev/zero > "$pipe_raw"
+head -c $(( pipe_frame * 40 )) /dev/zero > "$pipe_many"
+pipe_got=$( ./$BUILD/agtest --pipe --width 64 --height 36 < "$pipe_raw" 2>/dev/null | wc -c | tr -d ' ' )
+pipe_status=${PIPESTATUS[0]}
+if [[ "$pipe_status" -eq 0 && "$pipe_got" = "$(( pipe_frame * 2 ))" ]]; then
+	echo "   2.5 frames in, exactly 2 frames out, clean exit"
+else
+	echo "   2.5 frames in gave $pipe_got bytes out (want $(( pipe_frame * 2 ))), exit $pipe_status"
+	failures+=("pipe: frame count")
+fi
+./$BUILD/agtest --pipe --width 64 --height 36 < "$pipe_many" 2>/dev/null | head -c 1 >/dev/null
+pipe_status=${PIPESTATUS[0]}
+if [[ "$pipe_status" -eq 1 ]]; then
+	echo "   a closed stdout (| head -c 1): exit 1"
+else
+	echo "   a closed stdout gave exit $pipe_status, not 1"
+	failures+=("pipe: closed stdout")
+fi
+rm -f "$pipe_raw" "$pipe_many"
+
+echo
 echo "== sweep: no control silently dead"
 if python3 tools/sweep.py > /tmp/afterglow-sweep.txt 2>&1; then
 	tail -1 /tmp/afterglow-sweep.txt
