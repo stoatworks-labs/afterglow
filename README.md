@@ -168,6 +168,13 @@ build *remembers* the last N frames, because that is all FFGL offers, while the
 OpenFX build *fetches* frame `t − k` from the clip. The OpenFX side is
 therefore exact and deterministic where the FFGL side is merely faithful.
 
+**Fusion reports no frame rate; there, time-based controls assume 24 fps.**
+Resolve's Fusion page gives an OpenFX plugin no frame rate at all, and the first
+OpenFX builds failed every render there. Now Afterglow falls back to 24, Resolve's
+default timeline rate, so in Fusion Warp Speed runs as if the composition were 24
+fps whatever its real rate. A host that reports a rate, Resolve's Edit page
+included, gets its own.
+
 ## Build
 
 ```bash
