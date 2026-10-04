@@ -8,9 +8,11 @@
 > disagreements** — and separately proves that footage which is not moving comes
 > out of the effect byte-for-byte identical to what went in (see
 > [Status](#status)). Both the macOS universal bundle and the Windows x64 DLL
-> build in CI. It has **never been loaded into Resolume or Resolve** — only
-> compiled, rendered and measured offline. Check it in your own rig before
-> trusting it in a show.
+> build in CI. It has **never been loaded into Resolume**; the OpenFX build has
+> rendered as a tool on Resolve's Fusion page (from v0.1.5, which fixed every
+> render failing there) and nowhere else. Beyond that it is only compiled,
+> rendered and measured offline. Check it in your own rig before trusting it in
+> a show.
 
 Keeps the last few dozen frames and lays them back over the picture, each one
 further gone than the one in front of it — as an FFGL effect for
@@ -229,8 +231,9 @@ Verified by measurement on an M4 Max, macOS 26.4:
 
 Run it yourself with `tools/verify.sh`.
 
-**Not yet done:** never loaded into Resolume, never loaded into Resolve, and the
-browser demo has never been watched running — only proved to be running this
+**Not yet done:** never loaded into Resolume; in Resolve only run as a Fusion
+tool (from v0.1.5, which fixed every render failing there), never on its other
+pages; and the browser demo has never been watched running — only proved to be running this
 repo's shaders and maths. The Linux OpenFX bundle *is* built: it comes out of an
 `almalinux:8` container for the glibc 2.28 floor Resolve's supported Rocky 8
 needs, a second job `dlopen`s the shipped `.ofx` in `rockylinux:8` and calls the

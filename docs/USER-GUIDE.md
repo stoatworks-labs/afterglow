@@ -19,8 +19,9 @@ than merely fade, and it is why this is not a motion blur and not a feedback loo
 > what went in. All 23 controls are confirmed to change the picture. Both the macOS universal
 > bundle and the Windows x64 DLL build in CI.
 >
-> Still open: it has **never been loaded into Resolume or Resolve**. Everything about how the
-> controls *present* in a host is untested. Try it on a spare layer before you put it in a show.
+> Still open: it has **never been loaded into Resolume**, and the OpenFX build has only been run as
+> a tool on Resolve's Fusion page (from v0.1.5, which fixed every render failing there). Everything
+> about how the controls *present* in a host is untested. Try it on a spare layer before you put it in a show.
 >
 > This codebase was created with AI assistance, directed and reviewed by a human author.
 

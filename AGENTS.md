@@ -450,10 +450,13 @@ WebGL. Keep it that way, or the checker cannot import it.
   host exercises are: `plugMain` and `instantiateGL` (the `SetTextParameter`
   trap lives there), whether Resolume honours the parameter groups, and what
   the host's clock and blend state actually look like on the way in.
-- ☠️ **It has never been loaded into DaVinci Resolve.** `ofxprobe` is a
-  faithful harness but it is not Resolve, and in particular it is not a host
-  that renders frames out of order across several threads — which is the
-  condition the OpenFX build's whole design assumes.
+- ☠️ **In DaVinci Resolve it has only been run as a Fusion tool**: from v0.1.5
+  (the frame-rate guard) a render job of MediaIn → Afterglow → MediaOut
+  completes in Resolve Studio 21.1 on macOS (2026-10-04). That is a render, not
+  a study — nobody has compared it with `ofxprobe` there or tried the Edit or
+  Color page. `ofxprobe` is a faithful harness but it is not Resolve, and in
+  particular it is not a host that renders frames out of order across several
+  threads — which is the condition the OpenFX build's whole design assumes.
 - **Nothing built for Windows has ever been RUN.** The DLL compiles and the
   installer wraps, which is a real result and is not the same as Resolume
   loading it. The GLEW-from-vcpkg path in particular is only known to
