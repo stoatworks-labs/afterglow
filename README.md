@@ -38,14 +38,14 @@ of the effect exactly as they went in.*
 
 ## Download
 
-**[v0.1.4](https://github.com/stoatworks-labs/afterglow/releases/tag/v0.1.4)** — prebuilt for macOS, Windows and Linux. Pick your platform:
+**[v0.1.5](https://github.com/stoatworks-labs/afterglow/releases/tag/v0.1.5)** — prebuilt for macOS, Windows and Linux. Pick your platform:
 
 <details>
 <summary><b>macOS</b> — Universal (Apple Silicon + Intel)</summary>
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Universal (Apple Silicon + Intel) · .dmg disk image | [`afterglow-0.1.4-macos-universal.dmg`](https://github.com/stoatworks-labs/afterglow/releases/download/v0.1.4/afterglow-0.1.4-macos-universal.dmg) | 239 KB |
+| Universal (Apple Silicon + Intel) · .dmg disk image | [`afterglow-0.1.5-macos-universal.dmg`](https://github.com/stoatworks-labs/afterglow/releases/download/v0.1.5/afterglow-0.1.5-macos-universal.dmg) | 239 KB |
 | Universal (Apple Silicon + Intel) · .zip archive | [`afterglow-macos-universal.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-macos-universal.zip) | 201 KB |
 | Universal (Apple Silicon + Intel) · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`afterglow-ofx-macos-universal.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-ofx-macos-universal.zip) | 264 KB |
 
@@ -56,7 +56,7 @@ of the effect exactly as they went in.*
 
 | Build | Download | Size |
 | --- | --- | --- |
-| x64 · .exe installer | [`afterglow-0.1.4-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/afterglow/releases/download/v0.1.4/afterglow-0.1.4-windows-x86_64-setup.exe) | 227 KB |
+| x64 · .exe installer | [`afterglow-0.1.5-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/afterglow/releases/download/v0.1.5/afterglow-0.1.5-windows-x86_64-setup.exe) | 227 KB |
 | x64 · .zip archive | [`afterglow-windows-x86_64.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-windows-x86_64.zip) | 121 KB |
 | x64 · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`afterglow-ofx-windows-x86_64.zip`](https://github.com/stoatworks-labs/afterglow/releases/latest/download/afterglow-ofx-windows-x86_64.zip) | 75 KB |
 
