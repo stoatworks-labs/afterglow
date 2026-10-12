@@ -158,6 +158,7 @@ standard OpenFX folder and restart the host:
 ```
 macOS    /Library/OFX/Plugins/
 Windows  C:\Program Files\Common Files\OFX\Plugins\
+Linux    /usr/OFX/Plugins/
 ```
 
 The two builds share their controls, their conversions and their whole decay

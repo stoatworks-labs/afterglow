@@ -54,6 +54,7 @@ Copy `Afterglow.ofx.bundle` from the `-ofx-` download into the OpenFX folder and
 ```
 macOS    /Library/OFX/Plugins/
 Windows  C:\Program Files\Common Files\OFX\Plugins\
+Linux    /usr/OFX/Plugins/
 ```
 
 Same controls, same conversions, same decay model, so a look set up in one reads the same in the
