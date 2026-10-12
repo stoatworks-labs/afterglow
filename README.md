@@ -1,38 +1,36 @@
 # Afterglow
 
 > **AI-assisted project.** This codebase was created with [Claude](https://claude.com/claude-code)
-> (Anthropic), directed and reviewed by a human author. The decay model is
-> verified numerically by an offline harness that drives the real plugin class in
-> a headless GL context: it runs the shipped GLSL against an independent C++
-> implementation of the same maths — **365,696 comparisons with zero
-> disagreements** — and separately proves that footage which is not moving comes
-> out of the effect byte-for-byte identical to what went in (see
-> [Status](#status)). Both the macOS universal bundle and the Windows x64 DLL
-> build in CI. It has **never been loaded into Resolume**; the OpenFX build has
-> rendered as a tool on Resolve's Fusion page (from v0.1.5, which fixed every
-> render failing there) and nowhere else. Beyond that it is only compiled,
-> rendered and measured offline. Check it in your own rig before trusting it in
+> (Anthropic), directed and reviewed by a human author. It has **never been loaded into
+> Resolume**. The OpenFX build has rendered as a tool on Resolve's Fusion page (from v0.1.5,
+> which fixed every render failing there) and nowhere else, and both the macOS universal bundle
+> and the Windows x64 DLL build in CI. Beyond that it's only been compiled, rendered and
+> measured offline, by a harness that drives the plugin class itself in a headless GL context:
+> the shipped GLSL agrees with an independent C++ version of the same maths in **365,696
+> comparisons with zero disagreements**, and footage that isn't moving comes out byte-for-byte
+> as it went in. More under [Status](#status). Check it in your own rig before you trust it in
 > a show.
 
-Keeps the last few dozen frames and lays them back over the picture, each one
-further gone than the one in front of it — as an FFGL effect for
+Afterglow keeps the last few dozen frames and lays them back over the picture, each
+one further gone than the one in front of it. It's an FFGL effect for
 [Resolume](https://resolume.com) Arena and Avenue, and an OpenFX plugin for
 DaVinci Resolve, Vegas, Nuke and Natron.
 
-Not a blur and not a feedback loop. A **queue**: every frame goes in, the whole
-queue comes back out over the picture, and each frame in it is dimmer, coarser,
-more crushed, further drifted and further round the colour wheel than the one
-in front of it — until it reaches the end and drops off.
+It works as a **queue**. Every frame goes in, the whole queue comes back out over
+the picture, and each frame in it is dimmer, coarser, more crushed, further drifted
+and further round the colour wheel than the one in front of it, until it reaches the
+end and drops off. That makes it neither a blur nor a feedback loop, and there's a
+section further down on why.
 
 ![A trail of discrete ghosts behind a moving disc, over a static card that is untouched](docs/trail.png)
 
-*The harness's own moving test card, not footage. Note what has **not** happened:
-the colour bars, the ramp and the checkerboard are not moving, so they come out
-of the effect exactly as they went in.*
+*The harness's own moving test card rather than footage. Note what **hasn't**
+happened: the colour bars, the ramp and the checkerboard aren't moving, so they come
+out of the effect exactly as they went in.*
 
 [![Afterglow — frame trails that decay as they age, for Resolume](docs/video-thumb.png)](https://www.youtube.com/watch?v=SNWJKGV-dAU)
 
-*[Watch it](https://www.youtube.com/watch?v=SNWJKGV-dAU) — 55 seconds: four, twelve and thirty-two frames of discrete ghosts, Hold spreading a dozen across two seconds and Decay shaping the fall-off, the four blend modes, Pixelate coarsening each ghost with its age, Warp boiling and then swelling, Drift, Zoom and Spin carrying the trail away, Hue Shift, Bleach and Halation, and Background and Mix back to the clip. Crush has no beat: on real footage it barely moves a pixel (see the user guide). Rendered by the plugin's own harness over Resolume's bundled demo clips, not captured from Resolume.*
+*[Watch it](https://www.youtube.com/watch?v=SNWJKGV-dAU) (55 seconds): four, twelve and thirty-two frames of discrete ghosts, Hold spreading a dozen across two seconds and Decay shaping the fall-off, the four blend modes, Pixelate coarsening each ghost with its age, Warp boiling and then swelling, Drift, Zoom and Spin carrying the trail away, Hue Shift, Bleach and Halation, and Background and Mix back to the clip. Crush doesn't get a moment of its own, because on real footage it barely moves a pixel (see the user guide). Rendered by the plugin's own harness over Resolume's bundled demo clips rather than captured from Resolume.*
 
 <!-- downloads:start -->
 
@@ -83,36 +81,36 @@ macOS builds are signed and notarised and open normally. The Windows builds are 
 Hold sets how many host frames each one covers, so a dozen ghosts can span two
 seconds. Decay shapes how the weight falls away along the trail: low and it
 hangs on and drops late, high and only the last few frames read at all. Blend
-decides how they combine — a weighted average, added, screened, or the
+decides how they combine: a weighted average, added, screened, or the
 brightest of them.
 
-**The decay.** This is the part that is not just an echo. Every control below
+**The decay.** This is the part that makes it more than an echo. Every control below
 describes what has happened to a frame by the time it reaches the *end* of the
 queue, and each frame gets that much of it in proportion to its own age:
 
-- **Crush** — the bit depth collapsing, 8 bits down to 1 by the end of the
-  queue. The quietest control here: the most-crushed ghosts are also the
-  faintest, so on real footage it is a texture, not a look.
-- **Pixelate** — the grid coarsening, down to six cells across the frame.
-- **Warp** — a boiling noise field pulling the picture apart, with its own
+- **Crush**: the bit depth collapsing, 8 bits down to 1 by the end of the
+  queue. It's the quietest control here, because the most-crushed ghosts are
+  also the faintest, so on real footage it's a texture rather than a look.
+- **Pixelate**: the grid coarsening, down to six cells across the frame.
+- **Warp**: a boiling noise field pulling the picture apart, with its own
   scale and speed.
-- **Drift**, **Direction**, **Zoom**, **Spin** — where the ghost has travelled
-  to, and what it has done on the way.
-- **Hue Shift** — how far round the wheel the colour has gone. Half a turn is
+- **Drift**, **Direction**, **Zoom**, **Spin**: where the ghost has travelled
+  to, and what it's done on the way.
+- **Hue Shift**: how far round the wheel the colour has gone. Half a turn is
   the complement, which is where the trail stops reading as the same picture
   and starts reading as a second one.
-- **Bleach** — the saturation draining out.
+- **Bleach**: the saturation draining out.
 
-**Halation.** Highlights spilling off the ghosts, warm by default because that
-is the colour a real halation ring is — red light scattering back off the film
-base, with the emulsion having stopped the blue first. It is weighted to peak
-in the *middle* of the queue: the newest frame has not aged into anything yet,
-and the oldest is not there any more.
+**Halation.** Highlights spilling off the ghosts, warm by default because that's
+the colour a real halation ring is: red light scattering back off the film base,
+the emulsion having already stopped the blue. It's weighted to peak in the
+*middle* of the queue, since the newest frame hasn't aged into anything yet and
+the oldest isn't there any more.
 
 ![The same card in Ghosts mode with the bit depth, grid, drift and zoom turned up](docs/decay.png)
 
 *The same card with **Background → Ghosts**, which leaves the live frame out of
-the queue: what is left is the decay on its own, which is how it is meant to be
+the queue: what's left is the decay on its own, which is how it's meant to be
 set. Crush, Pixelate, Drift and Zoom are all up.*
 
 **Eight factory presets**: Clean Echo, Slow Burn, Datamosh, Undertow, Spin
@@ -120,25 +118,24 @@ Cycle, Bad Tape, Phosphor, Ghost Print.
 
 ## The one thing worth knowing
 
-**A picture that is not moving comes out untouched.** Twelve copies of the same
+**A picture that isn't moving comes out untouched.** Twelve copies of the same
 frame average to that frame, exactly, whatever the queue length or the falloff
-curve is — so the effect can be left switched on across a whole show and only
-does something when something moves. That is not a happy accident; it is what
-the per-slot weights are constructed to guarantee, and `agtest --still` fails
-the build if it stops being true.
+curve, so you can leave the effect switched on for a whole show and it only
+does something when something moves. The per-slot weights are built to
+guarantee that, and `agtest --still` fails the build if it ever stops being true.
 
-Screen is the deliberate exception. It lifts wherever the ghosts genuinely
-differ, which is the reason to choose it, and it is checked for never
+Screen is the exception, on purpose. It lifts wherever the ghosts actually
+differ, which is the reason to choose it, and it's checked for never
 *darkening*.
 
 ## Why a queue and not a feedback buffer
 
 The obvious way to build this is recursive: keep one buffer, blend each new
 frame into it, show the result. One texture instead of thirty-two, and it makes
-a genuinely similar trail — an exponential falloff is exactly what a recursive
+a pretty similar trail, since an exponential falloff is exactly what a recursive
 blend produces.
 
-It cannot make an old frame look *older*. Fold the frames together and every
+What it can't do is make an old frame look *older*. Fold the frames together and every
 degradation compounds on the accumulator instead of on the frame it belongs to:
 yesterday's crush gets crushed again today, the drift integrates into a smear,
 and there is no way back to the picture. Keeping the frames separately costs
@@ -165,8 +162,8 @@ Windows  C:\Program Files\Common Files\OFX\Plugins\
 
 The two builds share their controls, their conversions and their whole decay
 model, so a look set up in one reads the same in the other. They differ in
-exactly one place, and it is documented in [AGENTS.md](AGENTS.md): the FFGL
-build *remembers* the last N frames, because that is all FFGL offers, while the
+one place only, and it's documented in [AGENTS.md](AGENTS.md): the FFGL
+build *remembers* the last N frames, because that's all FFGL offers, while the
 OpenFX build *fetches* frame `t − k` from the clip. The OpenFX side is
 therefore exact and deterministic where the FFGL side is merely faithful.
 
@@ -191,12 +188,12 @@ macOS builds universal (arm64 + x86_64) by default. Add
 `-DCMAKE_OSX_ARCHITECTURES=arm64` for a faster development build, and
 `-DBUILD_OFX=OFF` to skip the OpenFX target.
 
-A bundle you build yourself is unsigned, which is fine locally — quarantine only
-applies to files that arrive from a browser.
+A bundle you build yourself is unsigned, which is fine locally, since quarantine
+only applies to files that arrive from a browser.
 
 ## Memory
 
-The queue is the memory cost, and it is the one number worth knowing before a
+The queue is the memory cost, and it's the one number worth knowing before a
 big show. Frames × the picture × 4 bytes, divided by the square of the
 Resolution divisor:
 
@@ -233,12 +230,12 @@ Run it yourself with `tools/verify.sh`.
 
 **Not yet done:** never loaded into Resolume; in Resolve only run as a Fusion
 tool (from v0.1.5, which fixed every render failing there), never on its other
-pages; and the browser demo has never been watched running — only proved to be running this
+pages; and the browser demo has never been watched running, only proved to be running this
 repo's shaders and maths. The Linux OpenFX bundle *is* built: it comes out of an
 `almalinux:8` container for the glibc 2.28 floor Resolve's supported Rocky 8
 needs, a second job `dlopen`s the shipped `.ofx` in `rockylinux:8` and calls the
-entry points a host calls first, and the zip is in the download block above. That
-is a build and a load, not a render, and no OFX host on any platform has opened
+entry points a host calls first, and the zip is in the download block above. That's
+a build and a load, not a render, and no OFX host on any platform has opened
 it. See [AGENTS.md](AGENTS.md) for the full list of what is assumed rather than
 measured, and for the traps.
 
