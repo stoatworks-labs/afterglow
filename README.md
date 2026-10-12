@@ -235,9 +235,9 @@ repo's shaders and maths. The Linux OpenFX bundle *is* built: it comes out of an
 `almalinux:8` container for the glibc 2.28 floor Resolve's supported Rocky 8
 needs, a second job `dlopen`s the shipped `.ofx` in `rockylinux:8` and calls the
 entry points a host calls first, and the zip is in the download block above. That's
-a build and a load, not a render, and no OFX host on any platform has opened
-it. See [AGENTS.md](AGENTS.md) for the full list of what is assumed rather than
-measured, and for the traps.
+a build and a load, not a render, and no OFX host has opened it on Linux (the
+Fusion renders were on macOS). See [AGENTS.md](AGENTS.md) for the full list of
+what is assumed rather than measured, and for the traps.
 
 <!-- attributions:start -->
 This project is built on other people's work — see [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
